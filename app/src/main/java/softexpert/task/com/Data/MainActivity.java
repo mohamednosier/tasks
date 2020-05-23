@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -169,7 +170,26 @@ public class MainActivity extends AppCompatActivity implements MainView, SwipeRe
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_earthquake, menu);
-        return super.onCreateOptionsMenu(menu);
+        MenuItem actionSearch= menu.findItem( R.id.search_action);
+
+        final SearchView searchViewEditText = (SearchView) actionSearch.getActionView();
+        searchViewEditText .setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Endpoints.EQ_URL="http://demo1286023.mockable.io/api/v1/cars?page="+query;
+                mMainPresenter.getDataForList(getApplicationContext(), false);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//                Endpoints.EQ_URL="http://demo1286023.mockable.io/api/v1/cars?page="+newText;
+//                mMainPresenter.getDataForList(getApplicationContext(), false);
+                return false;
+            }
+        });
+        return true;
+
     }
 
     @Override
@@ -178,6 +198,28 @@ public class MainActivity extends AppCompatActivity implements MainView, SwipeRe
             case R.id.menu_refresh:
                 mMainPresenter.getDataForList(getApplicationContext(), false);
                 return true;
+
+            case R.id.search_action:
+
+//                MenuItem actionSearch= item.;
+//                final SearchView searchViewEditText = (SearchView) actionSearch.getActionView();
+//                searchViewEditText .setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                    @Override
+//                    public boolean onQueryTextSubmit(String query) {
+//                        Endpoints.EQ_URL="http://demo1286023.mockable.io/api/v1/cars?page="+query;
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public boolean onQueryTextChange(String newText) {
+//                        Endpoints.EQ_URL="http://demo1286023.mockable.io/api/v1/cars?page="+newText;
+//                        return false;
+//                    }
+//                });
+//
+//                mMainPresenter.getDataForList(getApplicationContext(), false);
+//                return true;
+
 
             default:
                 return super.onOptionsItemSelected(item);

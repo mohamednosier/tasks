@@ -58,6 +58,9 @@ public class DataAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
     @Override
     public int getItemCount() {
+        if (mDatalist.size()>0){
         return mDatalist.size();
-    }
-}
+    }else {
+            return 0;
+        }
+}}
